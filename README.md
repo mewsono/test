@@ -22,10 +22,10 @@ The left rail has a phone-frame / full-screen toggle and a colour palette refere
 
 ## 2. Build the APK
 
-**On GitHub (no local SDK needed):** push a commit — the workflow runs
+**On GitHub (no local SDK needed):** every push runs
 `:mobile:assembleDebug` and publishes **`pixiv-debug-apk`** under the run's
-*Artifacts* section. Download it and sideload on an Android device
-(minSdk 26 / Android 8+).
+*Artifacts* section — currently building green (~9.4 MB).
+Download it and sideload on an Android device (minSdk 26 / Android 8+).
 
 **Locally:**
 ```bash
