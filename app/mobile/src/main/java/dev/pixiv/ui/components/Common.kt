@@ -218,7 +218,7 @@ fun CreamActionButton(
 
 /** Outlined Follow / Following button. */
 @Composable
-fun FollowButton(following: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun FollowButton(following: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val bg by animateColorAsState(if (following) PixivColors.Cream else Color.Transparent, label = "followBg")
     val fg by animateColorAsState(if (following) PixivColors.Ink else PixivColors.Cream, label = "followFg")
     Box(

@@ -46,7 +46,6 @@ import dev.pixiv.ui.components.DottedTitle
 import dev.pixiv.ui.components.Eyebrow
 import dev.pixiv.ui.components.Hairline
 import dev.pixiv.ui.components.RingedAvatar
-import dev.pixiv.ui.components.SectionHeader
 import dev.pixiv.ui.theme.PixivColors
 import dev.pixiv.ui.theme.PixivType
 
