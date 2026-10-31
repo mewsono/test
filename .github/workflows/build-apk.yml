@@ -1,9 +1,9 @@
 name: Build debug APK
 
+# Manual only: this workflow never builds on push or pull request.
+# Run it from the Actions tab ("Run workflow") or with:
+#   gh workflow run "Build debug APK"
 on:
-  push:
-    branches: ["**"]
-  pull_request:
   workflow_dispatch:
 
 permissions:

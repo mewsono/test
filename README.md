@@ -7,7 +7,7 @@ A dark, editorial Pixiv-style browsing app built from the supplied design:
 | --- | --- |
 | `preview/` | Live design preview — zero-dependency static server, interactive UI |
 | `app/` | Android app module — Kotlin + Jetpack Compose (Material 3) |
-| `.github/workflows/build-apk.yml` | CI: builds `debug` APK, uploads it as an artifact |
+| `.github/workflows/build-apk.yml` | Manual-only workflow: builds the `debug` APK on demand |
 
 ## 1. Live design preview
 
@@ -22,10 +22,12 @@ The left rail has a phone-frame / full-screen toggle and a colour palette refere
 
 ## 2. Build the APK
 
-**On GitHub (no local SDK needed):** every push runs
-`:mobile:assembleDebug` and publishes **`pixiv-debug-apk`** under the run's
-*Artifacts* section — currently building green (~9.4 MB).
-Download it and sideload on an Android device (minSdk 26 / Android 8+).
+**On GitHub (no local SDK needed):** the workflow is **manual-only** — it does
+not run on push. Trigger it when you want a build:
+`gh workflow run "Build debug APK"`, or the Actions tab → *Build debug APK* →
+*Run workflow*. It publishes **`pixiv-debug-apk`** under the run's *Artifacts*
+section (verified green, ~9.4 MB). Download it and sideload on an Android device
+(minSdk 26 / Android 8+).
 
 **Locally:**
 ```bash
