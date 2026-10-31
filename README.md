@@ -12,10 +12,30 @@ npm run build      # typecheck + production build into dist/
 npm run smoke      # build, then walk the main flows in a headless DOM
 ```
 
+## Mobile
+
+The app is built as a phone app first:
+
+- **Full-height app frame.** `body` is locked and `.app` fills `100dvh`; the only
+  scrolling box is `.scroll`, so the bottom nav, sheets and toast stay anchored
+  while content scrolls underneath.
+- **Safe areas.** `env(safe-area-inset-*)` padding on the scroller and nav keeps
+  content clear of the notch and the home indicator (also in standalone mode via
+  the `apple-mobile-web-app-*` meta tags).
+- **On a wide screen** (`min-width: 600px`) the same markup is presented inside a
+  390 x 844 handset frame with a notch, a status bar with a live clock and a home
+  indicator — so the desktop preview looks like the phone build rather than a
+  stretched column.
+- **Small phones** (`max-width: 360px`), **landscape** and
+  **`prefers-reduced-motion`** each get their own adjustments.
+- **Touch polish.** `touch-action: manipulation`, no tap highlight, press-scale
+  feedback, `overscroll-behavior: contain`; hover styles only apply on
+  `(hover: hover)` devices.
+
 ## How it is put together
 
 ```
-index.html          app shell (nav, detail sheet, post sheet, toast)
+index.html          app shell (status bar, scroller, nav, detail sheet, post sheet, toast)
 src/main.ts         event delegation, routing, render loop
 src/styles.css      the whole visual system (tokens, layout, components)
 src/lib/types.ts    domain types

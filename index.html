@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#0B0A12" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Pixiv" />
     <meta name="description" content="A quiet gallery of night scenes: torii gates, koi ponds, snow shrines." />
     <title>Pixiv Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,51 +18,81 @@
     />
   </head>
   <body>
-    <div class="shell">
-      <main id="view"></main>
-    </div>
-
-    <nav class="nav" aria-label="Main">
-      <button data-act="tab" data-v="home" aria-label="Home"></button>
-      <button data-act="tab" data-v="explore" aria-label="Explore"></button>
-      <button class="plus" data-act="create" aria-label="Post artwork"></button>
-      <button data-act="tab" data-v="saved" aria-label="Saved"></button>
-      <button data-act="tab" data-v="profile" aria-label="Profile"></button>
-    </nav>
-
-    <div class="detail" id="detail" hidden>
-      <div class="dsheet" id="dsheet" role="dialog" aria-modal="true" aria-label="Artwork"></div>
-    </div>
-
-    <div class="sheet-back" id="sheet" hidden>
-      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-        <h2 id="sheetTitle">Post artwork</h2>
-        <label class="drop" for="file" id="drop"></label>
-        <input class="sr" type="file" id="file" accept="image/*" />
-        <label class="lbl" for="atitle">Title</label>
-        <input
-          class="txt"
-          id="atitle"
-          type="text"
-          maxlength="60"
-          placeholder="Name your artwork"
-          autocomplete="off"
-        />
-        <div class="sheet-actions">
-          <button class="fbtn" data-act="closesheet" type="button">Cancel</button>
-          <button class="primary" id="postBtn" data-act="post" type="button" disabled>Post</button>
+    <!-- On a phone the viewport is the app; on a wide screen it becomes the
+         handset frame around it. -->
+    <div class="viewport">
+      <div class="app">
+        <div class="statusbar" aria-hidden="true">
+          <span class="clock" id="clock">9:41</span>
+          <span class="statusbar-icons">
+            <svg viewBox="0 0 18 12" width="18" height="12" fill="currentColor">
+              <rect x="0" y="8" width="3" height="4" rx="1" />
+              <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+              <rect x="10" y="3" width="3" height="9" rx="1" />
+              <rect x="15" y="0.5" width="3" height="11.5" rx="1" opacity=".4" />
+            </svg>
+            <svg viewBox="0 0 16 12" width="16" height="12" fill="currentColor">
+              <path d="M8 11.2 5.6 8.7a3.4 3.4 0 0 1 4.8 0z" />
+              <path d="M8 7.1a4.9 4.9 0 0 0-3.5 1.4L2.9 6.9a7.2 7.2 0 0 1 10.2 0l-1.6 1.6A4.9 4.9 0 0 0 8 7.1z" opacity=".85" />
+              <path d="M8 3.4c-2.4 0-4.7.9-6.4 2.6L0 4.4A11.3 11.3 0 0 1 8 .8c3 0 5.9 1.3 8 3.6L14.4 6A9 9 0 0 0 8 3.4z" opacity=".7" />
+            </svg>
+            <svg viewBox="0 0 26 12" width="26" height="12">
+              <rect x="0.6" y="0.6" width="21" height="10.8" rx="3" fill="none" stroke="currentColor" stroke-opacity=".5" />
+              <rect x="2.4" y="2.4" width="15" height="7.2" rx="1.8" fill="currentColor" />
+              <path d="M23.4 4.2v3.6a2 2 0 0 0 0-3.6z" fill="currentColor" fill-opacity=".6" />
+            </svg>
+          </span>
         </div>
+
+        <div class="scroll" id="scroll">
+          <div class="shell">
+            <main id="view"></main>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Main">
+          <button data-act="tab" data-v="home" aria-label="Home"></button>
+          <button data-act="tab" data-v="explore" aria-label="Explore"></button>
+          <button class="plus" data-act="create" aria-label="Post artwork"></button>
+          <button data-act="tab" data-v="saved" aria-label="Saved"></button>
+          <button data-act="tab" data-v="profile" aria-label="Profile"></button>
+        </nav>
+
+        <div class="detail" id="detail" hidden>
+          <div class="dsheet" id="dsheet" role="dialog" aria-modal="true" aria-label="Artwork"></div>
+        </div>
+
+        <div class="sheet-back" id="sheet" hidden>
+          <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+            <h2 id="sheetTitle">Post artwork</h2>
+            <label class="drop" for="file" id="drop"></label>
+            <input class="sr" type="file" id="file" accept="image/*" />
+            <label class="lbl" for="atitle">Title</label>
+            <input
+              class="txt"
+              id="atitle"
+              type="text"
+              maxlength="60"
+              placeholder="Name your artwork"
+              autocomplete="off"
+            />
+            <div class="sheet-actions">
+              <button class="fbtn" data-act="closesheet" type="button">Cancel</button>
+              <button class="primary" id="postBtn" data-act="post" type="button" disabled>Post</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+        <svg class="grain" aria-hidden="true">
+          <filter id="grainF">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#grainF)" />
+        </svg>
       </div>
     </div>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-    <svg class="grain" aria-hidden="true">
-      <filter id="grainF">
-        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#grainF)" />
-    </svg>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

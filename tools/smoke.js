@@ -55,7 +55,9 @@ const check = (label, ok, extra = '') => {
   await tick(200);
   const d = window.document;
 
+  check('app shell mounted', !!d.querySelector('.app > .scroll > .shell > #view'));
   check('nav has 5 buttons', d.querySelectorAll('.nav button').length === 5);
+  check('status bar clock set', /^\d{1,2}:\d{2}$/.test(d.getElementById('clock').textContent));
   check('home renders cards', d.querySelectorAll('.card').length === 14, `${d.querySelectorAll('.card').length}`);
   check('rising rail rendered', d.querySelectorAll('.arch').length === 7);
   check('hero art generated', (d.querySelector('.hero svg.art')?.outerHTML.length || 0) > 2000);
@@ -65,9 +67,12 @@ const check = (label, ok, extra = '') => {
   await tick();
   check('category filter narrows grid', d.querySelectorAll('#homeGrid .card').length > 0 && d.querySelectorAll('#homeGrid .card').length < 14, `${d.querySelectorAll('#homeGrid .card').length}`);
 
+  const scroll = d.getElementById('scroll');
+  scroll.scrollTop = 240;
   click('[data-act="tab"][data-v="explore"]');
   await tick(120);
   check('explore route applied', window.location.hash === '#explore');
+  check('tab change resets the app scroller', scroll.scrollTop === 0, `top=${scroll.scrollTop}`);
   check('mood cards', d.querySelectorAll('.mood').length === 6);
   check('trending tags', d.querySelectorAll('.trow').length === 5);
   check('artists rail', d.querySelectorAll('.artist').length === 6);

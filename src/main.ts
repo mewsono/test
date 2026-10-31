@@ -55,10 +55,23 @@ function renderView(): void {
   renderNav();
 }
 
+/** The app scrolls inside .scroll, not the window, so keep that element in sync. */
+function scroller(): HTMLElement | null {
+  return document.getElementById('scroll');
+}
+
+function scrollToTop(): void {
+  const sc = scroller();
+  if (sc) sc.scrollTop = 0;
+  else window.scrollTo(0, 0);
+}
+
 function renderKeepingScroll(): void {
-  const y = window.scrollY;
+  const y = scroller()?.scrollTop ?? window.scrollY;
   renderView();
-  window.scrollTo(0, y);
+  const sc = scroller();
+  if (sc) sc.scrollTop = y;
+  else window.scrollTo(0, y);
 }
 
 function syncStates(): void {
@@ -94,7 +107,7 @@ function setTab(tab: Tab): void {
     UI.tab = tab;
     hideDetail();
     renderView();
-    window.scrollTo(0, 0);
+    scrollToTop();
   } else {
     location.hash = tab;
   }
@@ -132,7 +145,7 @@ function route(): void {
   if (tab && tab !== UI.tab) {
     UI.tab = tab;
     renderView();
-    window.scrollTo(0, 0);
+    scrollToTop();
   }
 }
 
@@ -229,7 +242,7 @@ document.addEventListener('click', (e) => {
           hideDetail();
           UI.tab = 'explore';
           renderView();
-          window.scrollTo(0, 0);
+          scrollToTop();
         } else {
           location.hash = 'explore';
         }
@@ -339,7 +352,7 @@ document.addEventListener('click', (e) => {
       } else {
         location.hash = 'profile';
       }
-      window.scrollTo(0, 0);
+      scrollToTop();
       break;
     }
   }
@@ -380,8 +393,18 @@ window.addEventListener('hashchange', route);
 
 /* ---------- boot ---------- */
 
+function setClock(): void {
+  const el = document.getElementById('clock');
+  if (!el) return;
+  const now = new Date();
+  const h = now.getHours() % 12 || 12;
+  el.textContent = `${h}:${String(now.getMinutes()).padStart(2, '0')}`;
+}
+
 function boot(): void {
   applyPrefs();
+  setClock();
+  window.setInterval(setClock, 30_000);
   const initial = hashTab();
   if (initial) UI.tab = initial;
   renderView();
