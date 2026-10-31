@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pixiv. — Android design preview</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="stage">
+
+  <aside class="meta">
+    <div class="meta__eyebrow">Android · Kotlin + Compose</div>
+    <h1 class="meta__title">pixiv<span class="dot">.</span></h1>
+    <p class="meta__sub">Live design preview · 390 × 844 dp</p>
+
+    <div class="toggle" id="chromeToggle" aria-label="Device chrome">
+      <button data-chrome="frame" class="on">Phone frame</button>
+      <button data-chrome="bare">Full screen</button>
+    </div>
+
+    <nav class="screens">
+      <button data-jump="screen-home"><span>01</span> Home</button>
+      <button data-jump="screen-artwork"><span>02</span> Artwork</button>
+      <button data-jump="screen-discover"><span>03</span> Discover</button>
+    </nav>
+
+    <div class="palette">
+      <div class="sw"><i style="background:#0B0A12"></i>#0B0A12</div>
+      <div class="sw"><i style="background:#F3EBDD"></i>#F3EBDD</div>
+      <div class="sw"><i style="background:#FF6B4A"></i>#FF6B4A</div>
+      <div class="sw"><i style="background:#8F6BFF"></i>#8F6BFF</div>
+      <div class="sw"><i style="background:#A59FB8"></i>#A59FB8</div>
+      <div class="sw"><i style="background:#FFC46B"></i>#FFC46B</div>
+    </div>
+
+    <ul class="specs">
+      <li><b>Display</b> Bricolage Grotesque 800/700</li>
+      <li><b>Body</b> DM Sans 400/500/700</li>
+      <li><b>Radius</b> 32 cards · 31 nav · 22 chips</li>
+      <li><b>Nav</b> 62dp glass pill, 5 targets</li>
+    </ul>
+
+    <button class="ghost" id="resetBtn">Reset interactions</button>
+  </aside>
+
+  <main class="reel" id="reel">
+
+    <!-- ═══════════════════════ 01 · HOME ═══════════════════════ -->
+    <section class="screen-wrap" id="screen-home">
+      <div class="screen-label"><span>01</span> Home — curated gallery feed</div>
+      <div class="device">
+        <div class="device__inner">
+          <div class="app" data-screen="home">
+
+            <!-- header -->
+            <header class="home__top">
+              <div class="wordmark">pixiv<span class="dot">.</span></div>
+              <div class="row gap8">
+                <button class="iconbtn" data-say="Search" aria-label="Search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                </button>
+                <button class="iconbtn" data-say="Notifications" aria-label="Notifications">
+                  <span class="badge"></span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+                </button>
+              </div>
+            </header>
+
+            <!-- scrollable body -->
+            <div class="home__scroll">
+              <div class="eyebrow">Sat 31 Oct · Autumn issue</div>
+              <h2 class="h-section">Tonight's gallery</h2>
+
+              <!-- hero card -->
+              <a class="hero" href="#" data-open="artwork">
+                <img class="hero__art" src="/art/hero-lanterns.svg" alt="Lanterns at the Water Gate">
+                <div class="hero__scrim"></div>
+                <div class="hero__tag eyebrow-sm">Illustration of the day</div>
+                <div class="hero__kanji">夜祭</div>
+                <div class="hero__foot">
+                  <div class="stack8">
+                    <div class="hero__title">Lanterns at the Water Gate</div>
+                    <div class="byline">
+                      <div class="av av--sm av--pink">M</div>
+                      <span class="byline__name">mochi_rin</span>
+                      <span class="muted">· 12.4k likes</span>
+                    </div>
+                  </div>
+                  <button class="likebtn" data-like aria-label="Like">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+                  </button>
+                </div>
+              </a>
+
+              <!-- filters -->
+              <div class="chips" id="homeChips">
+                <button class="chip on">All</button>
+                <button class="chip">Illustration</button>
+                <button class="chip">Manga</button>
+                <button class="chip">Novels</button>
+              </div>
+
+              <!-- rising tonight -->
+              <div class="sec-head">
+                <h3 class="h-card">Rising tonight</h3>
+                <a class="link">See all</a>
+              </div>
+              <div class="rail">
+                <a class="thumb" href="#" data-open="artwork">
+                  <img src="/art/thumb-pagoda.svg" alt="">
+                  <div class="thumb__scrim"></div>
+                  <div class="thumb__cap">
+                    <div class="num">01</div>
+                    <div class="thumb__title">Pagoda in Morning Mist</div>
+                  </div>
+                </a>
+                <a class="thumb" href="#" data-open="artwork">
+                  <img src="/art/thumb-koi.svg" alt="">
+                  <div class="thumb__scrim"></div>
+                  <div class="thumb__cap">
+                    <div class="num">02</div>
+                    <div class="thumb__title">Koi, Third Pond</div>
+                  </div>
+                </a>
+                <a class="thumb" href="#" data-open="artwork">
+                  <img src="/art/thumb-snow.svg" alt="">
+                  <div class="thumb__scrim"></div>
+                  <div class="thumb__cap">
+                    <div class="num">03</div>
+                    <div class="thumb__title">First Snow, Quiet Shrine</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- nav -->
+            <nav class="nav">
+              <button class="navbtn on" data-say="Home" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                <span class="pindot"></span>
+              </button>
+              <button class="navbtn" data-say="Discover" data-goto="discover" aria-label="Discover">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+              </button>
+              <button class="navbtn navbtn--fab" data-say="New work" aria-label="New work">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="navbtn" data-say="Saved" aria-label="Saved">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v16l-5-4-5 4z"/></svg>
+              </button>
+              <button class="navbtn" data-say="Profile" aria-label="Profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1-4 4-6 8-6s7 2 8 6"/></svg>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════ 02 · ARTWORK ═══════════════════════ -->
+    <section class="screen-wrap" id="screen-artwork">
+      <div class="screen-label"><span>02</span> Artwork — detail &amp; actions</div>
+      <div class="device">
+        <div class="device__inner">
+          <div class="app" data-screen="artwork">
+
+            <div class="artwork__hero">
+              <img src="/art/artwork-hero.svg" alt="Lanterns at the Water Gate">
+              <div class="hero__scrim hero__scrim--tall"></div>
+              <button class="iconbtn iconbtn--float" style="left:16px" data-back aria-label="Back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>
+              </button>
+              <button class="iconbtn iconbtn--float" style="right:16px" data-say="More" aria-label="More">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>
+              </button>
+              <div class="hero__kanji hero__kanji--art">夜祭</div>
+            </div>
+
+            <div class="artwork__headline">
+              <div class="kicker"><span class="accent">Illustration</span><span class="rule"></span><span class="muted">Oct 28, 2026</span></div>
+              <h2 class="h-display">Lanterns at the Water Gate</h2>
+            </div>
+
+            <div class="artwork__scroll">
+              <!-- artist -->
+              <div class="artist">
+                <div class="av av--ring"><div class="av av--gap"><div class="av av--lg av--pink">M</div></div></div>
+                <div class="stack2">
+                  <div class="artist__name">mochi_rin</div>
+                  <div class="artist__meta">18.2k followers · 214 works</div>
+                </div>
+                <button class="follow" data-follow>Follow</button>
+              </div>
+
+              <!-- stats -->
+              <div class="stats">
+                <div class="stat"><b>12.4k</b><span>Likes</span></div>
+                <div class="stat"><b>86.9k</b><span>Views</span></div>
+                <div class="stat"><b>5.1k</b><span>Saved</span></div>
+              </div>
+
+              <!-- tags -->
+              <div class="tags">
+                <span class="tag"><i>#</i>original</span>
+                <span class="tag"><i>#</i>lantern</span>
+                <span class="tag"><i>#</i>night sky</span>
+                <span class="tag"><i>#</i>festival</span>
+              </div>
+
+              <p class="desc">A quiet night at the river lanterns. Thank you for all the kind words on the sketch.</p>
+            </div>
+
+            <!-- action bar -->
+            <div class="actionbar">
+              <button class="actionlike" data-like>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+                <span>Like</span>
+              </button>
+              <button class="actionico" data-say="Saved to collection" aria-label="Save">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v16l-5-4-5 4z"/></svg>
+              </button>
+              <button class="actionico" data-say="Comments" aria-label="Comments">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-5 4v-4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+              </button>
+              <button class="actionico" data-say="Share" aria-label="Share">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════ 03 · DISCOVER ═══════════════════════ -->
+    <section class="screen-wrap" id="screen-discover">
+      <div class="screen-label"><span>03</span> Discover — search, tags, artists</div>
+      <div class="device">
+        <div class="device__inner">
+          <div class="app" data-screen="discover">
+
+            <div class="discover__scroll">
+              <div class="eyebrow">Find your next favorite</div>
+              <h2 class="h-display h-display--36">Discover<span class="dot">.</span></h2>
+
+              <label class="search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Search tags, artists, works" aria-label="Search tags, artists and works">
+              </label>
+
+              <div class="sec-head">
+                <h3 class="h-card">Trending tags</h3>
+                <span class="muted12">Past 24 hours</span>
+              </div>
+              <div class="trendlist">
+                <button class="trend"><span class="num">01</span><span class="trend__tag">#autumn</span><span class="muted12">12.8k works</span></button>
+                <button class="trend"><span class="num">02</span><span class="trend__tag">#night sky</span><span class="muted12">9.4k works</span></button>
+                <button class="trend"><span class="num">03</span><span class="trend__tag">#halloween</span><span class="muted12">7.1k works</span></button>
+                <button class="trend"><span class="num">04</span><span class="trend__tag">#koi pond</span><span class="muted12">3.6k works</span></button>
+              </div>
+
+              <div class="sec-head">
+                <h3 class="h-card">Rising artists</h3>
+                <a class="link">See all</a>
+              </div>
+              <div class="artists">
+                <div class="artist-card">
+                  <div class="av av--ring av--ring--64"><div class="av av--gap av--gap--60"><div class="av av--xl av--pink">K</div></div></div>
+                  <div class="artist-card__name">Kuroe Aya</div>
+                  <button class="follow follow--sm" data-follow>Follow</button>
+                </div>
+                <div class="artist-card">
+                  <div class="av av--ring av--ring--64"><div class="av av--gap av--gap--60"><div class="av av--xl av--mint">H</div></div></div>
+                  <div class="artist-card__name">haru.ink</div>
+                  <button class="follow follow--sm" data-follow>Follow</button>
+                </div>
+                <div class="artist-card">
+                  <div class="av av--ring av--ring--64 av--ring--dim"><div class="av av--gap av--gap--60"><div class="av av--xl av--peach">S</div></div></div>
+                  <div class="artist-card__name">sorano</div>
+                  <button class="follow follow--sm is-following" data-follow>Following</button>
+                </div>
+              </div>
+
+              <a class="contest" href="#" data-say="Contest: Harvest Moon Challenge">
+                <img src="/art/contest-moon.svg" alt="">
+                <div class="contest__scrim"></div>
+                <div class="contest__body">
+                  <div class="contest__badge">Contest · 3 days left</div>
+                  <div>
+                    <div class="contest__title">Harvest Moon<br>Challenge</div>
+                    <div class="contest__meta">2,480 entries so far</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <nav class="nav">
+              <button class="navbtn" data-say="Home" data-goto="home" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+              </button>
+              <button class="navbtn on" data-say="Discover" aria-label="Discover">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+                <span class="pindot"></span>
+              </button>
+              <button class="navbtn navbtn--fab" data-say="New work" aria-label="New work">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <button class="navbtn" data-say="Saved" aria-label="Saved">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v16l-5-4-5 4z"/></svg>
+              </button>
+              <button class="navbtn" data-say="Profile" aria-label="Profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1-4 4-6 8-6s7 2 8 6"/></svg>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

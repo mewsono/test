@@ -1,0 +1,25 @@
+# Android / Gradle
+*.iml
+.gradle/
+local.properties
+.idea/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.keystore
+!debug.keystore
+
+# Node / preview tooling
+node_modules/
+package-lock.json
+shot.mjs
+*.log
+
+# Local scratch
+design_ref/*.html
+design_ref/outline_*.txt
+design_ref/clean_*.txt
+design_ref/

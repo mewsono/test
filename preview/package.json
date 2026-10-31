@@ -1,0 +1,11 @@
+{
+  "name": "pixiv-design-preview",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Live localhost preview for the Kotlin/Compose Pixiv-style app design",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  }
+}
