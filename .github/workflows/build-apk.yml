@@ -18,25 +18,26 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.9"
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install SDK packages
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      # The Ubuntu runner image ships the Android SDK; just install what we pin.
+      - name: Install Android SDK packages
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          cp local.properties app/local.properties
 
       - name: Assemble debug APK
         working-directory: app
-        run: gradle :mobile:assembleDebug --no-daemon --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew :mobile:assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -45,10 +46,10 @@ jobs:
           path: app/mobile/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
-      - name: Upload Compose previews (screenshots)
+      - name: Upload build reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: apk-build-logs
+          name: build-reports
           path: app/mobile/build/reports/**
           if-no-files-found: ignore
