@@ -1,0 +1,18 @@
+{
+  "name": "pixiv-gallery",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A quiet gallery of night scenes \u2014 art-first mobile feed with procedurally drawn covers.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "smoke": "npm run build && node tools/smoke.js dist/index.html"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^8.3.5"
+  }
+}

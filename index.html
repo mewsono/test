@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0B0A12" />
+    <meta name="description" content="A quiet gallery of night scenes: torii gates, koi ponds, snow shrines." />
+    <title>Pixiv Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="shell">
+      <main id="view"></main>
+    </div>
+
+    <nav class="nav" aria-label="Main">
+      <button data-act="tab" data-v="home" aria-label="Home"></button>
+      <button data-act="tab" data-v="explore" aria-label="Explore"></button>
+      <button class="plus" data-act="create" aria-label="Post artwork"></button>
+      <button data-act="tab" data-v="saved" aria-label="Saved"></button>
+      <button data-act="tab" data-v="profile" aria-label="Profile"></button>
+    </nav>
+
+    <div class="detail" id="detail" hidden>
+      <div class="dsheet" id="dsheet" role="dialog" aria-modal="true" aria-label="Artwork"></div>
+    </div>
+
+    <div class="sheet-back" id="sheet" hidden>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <h2 id="sheetTitle">Post artwork</h2>
+        <label class="drop" for="file" id="drop"></label>
+        <input class="sr" type="file" id="file" accept="image/*" />
+        <label class="lbl" for="atitle">Title</label>
+        <input
+          class="txt"
+          id="atitle"
+          type="text"
+          maxlength="60"
+          placeholder="Name your artwork"
+          autocomplete="off"
+        />
+        <div class="sheet-actions">
+          <button class="fbtn" data-act="closesheet" type="button">Cancel</button>
+          <button class="primary" id="postBtn" data-act="post" type="button" disabled>Post</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <svg class="grain" aria-hidden="true">
+      <filter id="grainF">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grainF)" />
+    </svg>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
