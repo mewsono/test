@@ -109,8 +109,8 @@ export function NowPlaying() {
       <div className="now__head">
         <h1 className="now__title serif">{current.title}</h1>
         <p className="now__by">
-          {current.artist} <span className="dot">·</span> {album.title} <span className="dot">·</span>{' '}
-          {album.year}
+          {current.artist} <span className="dot">·</span> {album.genre}{' '}
+          <span className="dot">·</span> {album.year}
         </p>
       </div>
 
