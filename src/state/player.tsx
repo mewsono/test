@@ -10,9 +10,6 @@ import {
 } from 'react';
 import {
   ALBUMS,
-  ALBUM_BY_ID,
-  ALL_TRACKS,
-  PLAYLIST_BY_ID,
   TRACK_BY_ID,
   albumOf,
   type Album,
@@ -446,8 +443,3 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     </PlayerCtx.Provider>
   );
 }
-
-/** everything a shuffle button is allowed to pick from */
-export const EVERYTHING = ALL_TRACKS;
-export const albumById = ALBUM_BY_ID;
-export const playlistById = PLAYLIST_BY_ID;

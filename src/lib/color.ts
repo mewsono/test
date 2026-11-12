@@ -62,11 +62,3 @@ export function vivify(hex: string, minL = 0.46, minS = 0.5): string {
   return hsl(h, Math.max(s, minS), Math.max(l, minL));
 }
 
-export function luminance(hex: string): number {
-  const { r, g, b } = hexToRgb(hex);
-  const f = (v: number) => {
-    const x = v / 255;
-    return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
-  };
-  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
-}

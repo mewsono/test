@@ -39,14 +39,6 @@ export const ChevronLeft = (p: P) => (
   </Svg>
 );
 
-export const More = (p: P) => (
-  <Svg {...p}>
-    <circle cx="12" cy="5" r="1" />
-    <circle cx="12" cy="12" r="1" />
-    <circle cx="12" cy="19" r="1" />
-  </Svg>
-);
-
 export const Heart = ({ filled, ...p }: P & { filled?: boolean }) => (
   <Svg {...p} fill={filled ? 'currentColor' : 'none'}>
     <path d="M20.8 5.6a5 5 0 00-7.1 0L12 7.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 21.5l8.8-8.8a5 5 0 000-7.1z" />
@@ -151,20 +143,6 @@ export const PlaySmall = (p: P) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}>
     <path d="M8 5.5v13l10-6.5z" />
   </svg>
-);
-
-export const SpeakerLow = (p: P) => (
-  <Svg {...p}>
-    <path d="M4 9v6h4l5 4V5L8 9H4z" />
-    <path d="M17 9.5a4 4 0 010 5" />
-  </Svg>
-);
-
-export const SpeakerHigh = (p: P) => (
-  <Svg {...p}>
-    <path d="M4 9v6h4l5 4V5L8 9H4z" />
-    <path d="M16.5 8.5a5 5 0 010 7M19 6a8 8 0 010 12" />
-  </Svg>
 );
 
 export const Basket = (p: P) => (

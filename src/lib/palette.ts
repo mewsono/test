@@ -1,5 +1,5 @@
 import type { ArtRecipe } from '../data/library';
-import { hexToRgb, rgbToHsl, hsl, vivify } from './color';
+import { rgbToHsl, hsl, vivify } from './color';
 import { coverCanvas } from './cover';
 
 export type Palette = {
@@ -135,7 +135,3 @@ export function paletteFor(art: ArtRecipe): Palette {
   return p;
 }
 
-export function previewSwatch(hex: string): string {
-  const { r, g, b } = hexToRgb(hex);
-  return `rgb(${r}, ${g}, ${b})`;
-}
