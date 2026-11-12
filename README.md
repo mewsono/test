@@ -35,6 +35,8 @@ warm accent.
 - Playback through a real `<audio>` element, routed into a Web Audio graph.
 - Seek by dragging the wave, shuffle, repeat one/all, next/previous, a sleep
   timer, and a five-band EQ that shapes the live signal.
+- A **Spacious** width mode — mid/side stretch plus a short room — for when the
+  phone's own spatial effect isn't in play.
 - Library, staggered album wall, album sleeves with track notes, search across
   titles/artists/genres, liked songs and counter mixes.
 - State persists: queue, position, volume, tone, likes.
@@ -77,6 +79,10 @@ src/
 scripts/      audio forge + smoke test
 public/       audio, fonts (Fraunces + Manrope, SIL OFL — see fonts/OFL.txt)
 ```
+
+Porting this to Kotlin? See [docs/porting-to-android.md](docs/porting-to-android.md)
+— what maps to `ExoPlayer` and `AudioEffect`, and why opening the phone's own EQ
+or Dolby Atmos is an Android job rather than a browser one.
 
 Fonts are the Google Fonts variable subsets of Fraunces Italic and Manrope,
 served locally under the SIL Open Font License; the licence travels with them in

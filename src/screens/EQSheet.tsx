@@ -14,6 +14,7 @@ const PRESETS: { name: string; gains: number[] }[] = [
 export function EQSheet() {
   const engine = useMemo(() => getEngine(), []);
   const [bands, setBands] = useState<number[]>(() => engine.getBands());
+  const [spatial, setSpatial] = useState(() => engine.getSpatial());
   const dragging = useRef<number | null>(null);
 
   const setBand = (i: number, v: number) => {
@@ -107,7 +108,38 @@ export function EQSheet() {
         </button>
       </div>
 
-      <p className="eq-sheet__hint">Applied live to the record coming out of the speakers.</p>
+      <div className="eq-sheet__width">
+        <span className="eyebrow">Width</span>
+        <div className="eq-sheet__presets">
+          <button
+            type="button"
+            className={`timer__opt ${!spatial ? 'is-on' : ''}`}
+            onClick={() => {
+              engine.setSpatial(false);
+              setSpatial(false);
+            }}
+          >
+            Stereo
+          </button>
+          <button
+            type="button"
+            className={`timer__opt ${spatial ? 'is-on' : ''}`}
+            onClick={() => {
+              engine.setSpatial(true);
+              setSpatial(true);
+            }}
+          >
+            Spacious
+          </button>
+        </div>
+      </div>
+
+      <p className="eq-sheet__hint">
+        This EQ and the width control are applied live, in the browser. They cannot reach the
+        phone&apos;s own audio panel — a page can&apos;t open Settings or switch on Dolby Atmos. If
+        yours is already on system-wide, it still processes this sound on top: use one or the
+        other if it starts to sound doubled.
+      </p>
     </div>
   );
 }

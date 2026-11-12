@@ -13,6 +13,21 @@ export type EngineEvent =
   | { type: 'error'; message: string };
 
 export const EQ_FREQS = [60, 250, 1000, 4000, 12000] as const;
+
+/** a little decaying noise, used as the room in the wide stage */
+function makeImpulse(ctx: AudioContext, seconds: number, decay: number): AudioBuffer {
+  const rate = ctx.sampleRate;
+  const len = Math.max(1, Math.floor(rate * seconds));
+  const buf = ctx.createBuffer(2, len, rate);
+  for (let c = 0; c < 2; c++) {
+    const data = buf.getChannelData(c);
+    for (let i = 0; i < len; i++) {
+      const t = i / len;
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, decay) * 0.45;
+    }
+  }
+  return buf;
+}
 export const EQ_LABELS = ['60', '250', '1k', '4k', '12k'] as const;
 
 export class Engine {
@@ -25,6 +40,8 @@ export class Engine {
   private listeners = new Set<(e: EngineEvent) => void>();
   private volume = 0.8;
   private eq: number[] = EQ_FREQS.map(() => 0);
+  private spatial?: { dry: GainNode; wet: GainNode; rev: GainNode };
+  private spatialOn = false;
 
   constructor() {
     const audio = new Audio();
@@ -81,9 +98,97 @@ export class Engine {
       return b;
     });
     node.connect(this.analyser);
-    this.analyser.connect(this.master);
+    this.analyser.connect(this.buildSpatial(ctx));
     this.master.connect(ctx.destination);
     this.ctx = ctx;
+    this.applySpatial(0.001);
+  }
+
+  /**
+   * A wide listening stage: mid/side stretching plus a short room, so the
+   * record opens up on headphones without waiting for the phone's own
+   * spatial effect to kick in.
+   */
+  private buildSpatial(ctx: AudioContext): AudioNode {
+    const width = 1.45;
+    const input = ctx.createGain();
+    const dry = ctx.createGain();
+    const wet = ctx.createGain();
+    const rev = ctx.createGain();
+    const out = ctx.createGain();
+
+    // mid = (L + R) / 2
+    const split = ctx.createChannelSplitter(2);
+    const mid = ctx.createGain();
+    mid.gain.value = 0.5;
+    // side = (L - R) / 2
+    const sidePos = ctx.createGain();
+    sidePos.gain.value = 0.5;
+    const sideNeg = ctx.createGain();
+    sideNeg.gain.value = -0.5;
+    const side = ctx.createGain();
+
+    const midL = ctx.createGain();
+    const midR = ctx.createGain();
+    const sideL = ctx.createGain();
+    sideL.gain.value = width;
+    const sideR = ctx.createGain();
+    sideR.gain.value = -width;
+
+    const merge = ctx.createChannelMerger(2);
+
+    input.connect(split);
+    split.connect(mid, 0);
+    split.connect(mid, 1);
+    split.connect(sidePos, 0);
+    split.connect(sideNeg, 1);
+    sidePos.connect(side);
+    sideNeg.connect(side);
+
+    mid.connect(midL);
+    mid.connect(midR);
+    side.connect(sideL);
+    side.connect(sideR);
+
+    midL.connect(merge, 0, 0);
+    sideL.connect(merge, 0, 0);
+    midR.connect(merge, 0, 1);
+    sideR.connect(merge, 0, 1);
+
+    // a very short room, just to stop the widened image sounding hollow
+    const conv = ctx.createConvolver();
+    conv.buffer = makeImpulse(ctx, 0.55, 3.2);
+
+    input.connect(dry);
+    merge.connect(wet);
+    merge.connect(conv);
+    conv.connect(rev);
+
+    dry.connect(out);
+    wet.connect(out);
+    rev.connect(out);
+
+    this.spatial = { dry, wet, rev };
+    out.connect(this.master!);
+    return input;
+  }
+
+  private applySpatial(ramp = 0.06) {
+    if (!this.spatial || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    const on = this.spatialOn;
+    this.spatial.wet.gain.setTargetAtTime(on ? 0.92 : 0, t, ramp);
+    this.spatial.dry.gain.setTargetAtTime(on ? 0 : 1, t, ramp);
+    this.spatial.rev.gain.setTargetAtTime(on ? 0.16 : 0, t, ramp);
+  }
+
+  setSpatial(on: boolean) {
+    this.spatialOn = on;
+    this.applySpatial();
+  }
+
+  getSpatial() {
+    return this.spatialOn;
   }
 
   async resume() {

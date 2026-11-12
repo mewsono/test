@@ -922,8 +922,16 @@
   padding: 0 16px;
   font-size: 12px;
 }
+.eq-sheet__width {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--glass-line);
+  padding-top: 18px;
+}
 .eq-sheet__hint {
   font-size: 12px;
+  line-height: 1.65;
   color: var(--muted);
-  opacity: 0.8;
+  opacity: 0.78;
 }
