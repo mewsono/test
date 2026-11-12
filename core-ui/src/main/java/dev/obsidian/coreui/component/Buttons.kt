@@ -139,7 +139,7 @@ fun ObsidianPill(
 /** Read-only badge, e.g. "FLAC · 24/96" between the two timecodes. */
 @Composable
 fun QualityChip(text: String, modifier: Modifier = Modifier) {
-    val accent = LocalAccent.current
+    // Monochrome on purpose: the accent is reserved for the six interactive elements.
     Box(
         modifier = modifier
             .clip(PillShape)
@@ -149,7 +149,7 @@ fun QualityChip(text: String, modifier: Modifier = Modifier) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelSmall,
-            color = accent.color,
+            color = ObsidianColors.TextSecondary,
         )
     }
 }
